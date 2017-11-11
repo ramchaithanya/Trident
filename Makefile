@@ -2,11 +2,12 @@
 CC      = g++
 LINK	= -c
 DEBUG   = -g
+INC	= -I/usr/include/opencv2
 CFLAGS  = -Wall -c $(DEBUG)
-LIBFLAGS	= `wx-config --cxxflags`
-LIBFLAGS	+= `pkg-config --cflags opencv`
-LIBS	= `wx-config --libs`
-LIBS	+= `pkg-config --libs opencv`
+#LIBFLAGS	= `wx-config --cxxflags`
+LIBFLAGS	= `pkg-config --cflags opencv`
+#LIBS	= `wx-config --libs`
+LIBS	= `pkg-config --libs opencv`
 
 #This finds all your cc files and places then into SRC. It's equivalent would be
 # SRC = src/main.cc src/folder1/func1.cc src/folder1/func2.cc src/folder2/func3.cc
@@ -28,12 +29,12 @@ all: $(BIN)
 
 #$(BIN) is dependent on objects
 $(BIN): $(OBJ)
-	$(CC)  $(LIBS) $^ -o $(BIN)
+	$(CC)  $(LIBS) $(INC) $^ -o $(BIN)
 
 #each object file is dependent on its source file, and whenever make needs to create
 # an object file, to follow this rule:
 %.o: %.cpp
-	$(CC) $(CFLAGS) $(LIBFLAGS) -c $^ -o $@
+	$(CC) $(CFLAGS) $(LIBFLAGS) $(INC) -c $^ -o $@
 
 clean:
 	\rm -rvf $(OBJ) $(BIN)
